@@ -48,7 +48,7 @@
   --max: 1180px;
 }
 *,*::before,*::after{box-sizing:border-box}
-html{overflow-x:clip;scroll-behavior:smooth}
+html{overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:76px}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 body{
   margin:0;overflow-x:clip;
@@ -91,12 +91,34 @@ a{color:inherit}
 /* ---------- первый экран ---------- */
 .hero{position:relative;display:grid;align-items:end;min-height:clamp(520px,86svh,900px);color:var(--color-on-photo);isolation:isolate}
 .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
-.hero::after{
-  content:"";position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(to top, var(--color-scrim) 8%, oklch(18% 0.018 120 / .28) 46%, var(--color-scrim-soft) 82%);
+.hero-inner{position:relative;max-width:var(--max);width:100%;margin-inline:auto;padding:0 var(--gutter) clamp(28px,5vw,56px)}
+.hero-inner::before{
+  content:"";position:absolute;z-index:-1;bottom:0;left:50%;
+  width:100vw;transform:translateX(-50%);
+  height:calc(100% + 130px);
+  background:linear-gradient(to top,
+    oklch(18% 0.018 120 / .82) 0%,
+    oklch(18% 0.018 120 / .78) 30%,
+    oklch(18% 0.018 120 / .72) 55%,
+    oklch(18% 0.018 120 / .66) 70%,
+    oklch(18% 0.018 120 / .62) 78%,
+    oklch(18% 0.018 120 / .40) 86%,
+    oklch(18% 0.018 120 / .14) 93%,
+    var(--color-scrim-soft) 100%);
 }
-.hero-inner{max-width:var(--max);width:100%;margin-inline:auto;padding:0 var(--gutter) clamp(28px,5vw,56px)}
-.hero .eyebrow{margin:0 0 14px;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:oklch(88% 0.02 110)}
+.hero .eyebrow{
+  margin:0 0 14px;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--color-on-photo);
+  display:flex;flex-wrap:wrap;align-items:baseline;column-gap:.5em;row-gap:2px;
+}
+.hero .eyebrow span{white-space:nowrap}
+.hero .eyebrow span+span::before{content:"·";margin-right:.45em;opacity:.8}
+@media (max-width:560px){
+  .hero .eyebrow{display:block;line-height:1.85}
+  .hero .eyebrow span{white-space:normal}
+  .hero .eyebrow span:last-child{display:block}
+  .hero .eyebrow span:last-child::before{content:none;margin:0}
+}
 .hero h1{
   margin:0;font-family:var(--font-display);font-weight:500;
   font-size:clamp(2.05rem, 4.4vw + .7rem, 3.7rem);line-height:1.06;letter-spacing:-.012em;
@@ -269,7 +291,7 @@ footer.page a:hover,footer.page a:focus-visible{text-decoration:underline;text-u
   <section class="hero" id="top">
     <img src="assets/hero-hammocks.webp" alt="Гамаки для аэройоги вдоль стены зала студии «Баланс»" width="1600" height="900">
     <div class="hero-inner">
-      <p class="eyebrow">Новосибирск · Выборная, 89/6 · цокольный этаж</p>
+      <p class="eyebrow"><span>Новосибирск</span><span>Выборная, 89/6</span><span>цокольный этаж</span></p>
       <h1>Студия, где спина выдыхает</h1>
       <p class="sub">Гамаки, хатха, пилатес, растяжка и детские группы в цоколе дома на Выборной — сто метров от остановки НГПУ.</p>
       <div class="hero-actions">
